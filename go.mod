@@ -1,6 +1,6 @@
 module github.com/mihailtudos/bookings
 
-go 1.21.1
+go 1.21
 
 require (
 	github.com/alexedwards/scs/v2 v2.5.1
