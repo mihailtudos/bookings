@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"github.com/mihailtudos/bookings/pkg/config"
 	"github.com/mihailtudos/bookings/pkg/models"
 	"github.com/mihailtudos/bookings/pkg/render"
@@ -27,7 +26,6 @@ func NewHandlers(r *Repository) {
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	remoteIP := r.RemoteAddr
 	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
-	fmt.Println(remoteIP)
 	render.RenderTemplate(w, "home.page.gohtml", &models.TemplateData{})
 }
 
