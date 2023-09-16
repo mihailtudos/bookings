@@ -94,7 +94,7 @@
                     }, false);
                 })();
 
-                function alert(level, msg) {
+                function notify(level, msg) {
                     notie.alert({
                         type: level || "warning",
                         text: msg,
@@ -110,6 +110,17 @@
                         confirmButtonText: confBtn
                     })
                 }
+                {{with .Error}}
+                    notify("error", "{{.}}");
+                {{end}}
+
+                {{with .Flash}}
+                    notify("success", "{{.}}");
+                {{end}}
+
+                {{with .Warning}}
+                    notify("warning", "{{.}}");
+                {{end}}
 
                 function Prompt() {
                     const toast = (config) => {
