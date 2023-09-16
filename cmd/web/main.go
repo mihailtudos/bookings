@@ -1,10 +1,12 @@
 package main
 
 import (
+	"encoding/gob"
 	"fmt"
 	"github.com/alexedwards/scs/v2"
 	"github.com/mihailtudos/bookings/internal/config"
 	"github.com/mihailtudos/bookings/internal/handlers"
+	"github.com/mihailtudos/bookings/internal/models"
 	"github.com/mihailtudos/bookings/internal/render"
 	"log"
 	"net/http"
@@ -18,6 +20,8 @@ var session *scs.SessionManager
 
 func main() {
 	app.InProduction = false
+	//allow to store reservations in session
+	gob.Register(models.Reservation{})
 
 	session = scs.New()
 	session.Lifetime = 24 * time.Hour
