@@ -4,29 +4,30 @@
         <div class="row">
             <h1 class="text-center mt-4">Make Reservation</h1>
             <div class="col-10 mx-auto">
-                <form class="my-5" method="post">
+                <form class="my-5" method="post" action="/make-reservation">
+                    <input type="hidden" name="csrf_token" value="{{ .CSRFToken }}">
                     <div class="form-row">
                         <div class="form-group col">
                             <label for="first_name">First name</label>
                             <input type="text" class="form-control" id="first_name" name="first_name"
-                                   aria-describedby="first_nameHelp" required>
+                                   aria-describedby="first_nameHelp" >
                         </div>
                         <div class="form-group col">
                             <label for="last_name">Last name</label>
                             <input type="text" class="form-control" id="last_name" name="last_name"
-                                   aria-describedby="last_nameHelp" required>
+                                   aria-describedby="last_nameHelp" >
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" name="email"
-                                   aria-describedby="emailHelp" required>
+                                   aria-describedby="emailHelp" >
                         </div>
                         <div class="form-group col">
                             <label for="phone">Phone</label>
                             <input type="text" class="form-control" id="phone" name="phone"
-                                   aria-describedby="phoneHelp" required>
+                                   aria-describedby="phoneHelp" >
                         </div>
                     </div>
 

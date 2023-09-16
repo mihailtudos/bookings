@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/mihailtudos/bookings/internal/config"
+	"github.com/mihailtudos/bookings/internal/forms"
 	"github.com/mihailtudos/bookings/internal/models"
 	"github.com/mihailtudos/bookings/internal/render"
 	"net/http"
@@ -85,7 +86,13 @@ func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "make-reservation.page.gohtml", &models.TemplateData{})
+	render.RenderTemplate(w, r, "make-reservation.page.gohtml", &models.TemplateData{
+		Form: forms.New(nil),
+	})
+}
+
+func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("hit")
 }
 
 func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
