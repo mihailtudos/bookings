@@ -42,7 +42,34 @@
                 </form>
             `;
 
-            attention.custom({ msg: html, title: "Check availability form"});
+            attention.custom({
+                msg: html,
+                title: "Check availability form",
+                callback: async function (result) {
+                    let form = document.getElementById("check-availability-form");
+                    let formData = new FormData(form);
+                    formData.append("csrf_token", "{{.CSRFToken}}")
+
+                    const res = await fetch("/search-availability-json", {
+                        method: "POST",
+                        body: formData
+                    });
+                    const data = await res.json()
+                    console.log(data);
+                },
+                willOpen: () => {
+                    const elem = document.getElementById('reserve-dates-modal');
+                    new DateRangePicker(elem, {
+                        format: "yyyy-mm-dd",
+                        showOnFocus: true
+                    });
+                },
+                didOpen: () => {
+                    document.getElementById('from').removeAttribute('disabled');
+                    document.getElementById('to').removeAttribute('disabled');
+                    document.getElementById('swal2-html-container').classList.remove('swal2-html-container');
+                },
+            });
         });
     </script>
 {{end}}

@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/mihailtudos/bookings/pkg/config"
 	"github.com/mihailtudos/bookings/pkg/models"
@@ -56,6 +57,31 @@ func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 	end := r.Form.Get("end")
 
 	w.Write([]byte(fmt.Sprintf("%s %s %s", "Posted to PostAvailability", start, end)))
+}
+
+type jsonResponse struct {
+	OK      bool   `json:"ok"`
+	Message string `json:"message"`
+}
+
+func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
+	data := r.Form.Get("csrf_token")
+
+	fmt.Println(data)
+	resp := jsonResponse{true, "Available"}
+
+	out, err := json.MarshalIndent(resp, "", "    ")
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	_, err = w.Write(out)
+
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {

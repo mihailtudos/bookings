@@ -119,8 +119,6 @@
                             position = 'top-end',
                         } = config;
 
-                        console.log(msg, icon, position)
-
                         const Toast = Swal.mixin({
                             toast: true,
                             title: msg,
@@ -157,10 +155,10 @@
                     async function custom(config) {
                         const {
                             msg = '',
-                            title = ''
+                            title = '',
                         } = config
 
-                        const { value: formValues } = await Swal.fire({
+                        const { value: result } = await Swal.fire({
                             title: title,
                             backdrop: false,
                             showCancelButton: true,
@@ -173,21 +171,30 @@
                                 ]
                             },
                             didOpen: () => {
-                                document.getElementById('from').removeAttribute('disabled');
-                                document.getElementById('to').removeAttribute('disabled');
-                                document.getElementById('swal2-html-container').classList.remove('swal2-html-container');
+                                if (config.didOpen) {
+                                    config.didOpen();
+                                }
                             },
                             willOpen: () => {
-                                const elem = document.getElementById('reserve-dates-modal');
-                                new DateRangePicker(elem, {
-                                    format: "yyyy-mm-dd",
-                                    showOnFocus: true
-                                });
+                                if (config.willOpen) {
+                                    config.willOpen();
+                                }
+
                             },
                         })
 
-                        if (formValues) {
-                            Swal.fire(JSON.stringify(formValues))
+                        if (result) {
+                            if (result.dismiss !== Swal.DismissReason.cancel) {
+                                if (result.value !== "") {
+                                    if (config.callback !== undefined) {
+                                        config.callback(result);
+                                    }
+                                } else {
+                                    config.callback();
+                                }
+                            } else {
+                                config.callback();
+                            }
                         }
                     }
 
