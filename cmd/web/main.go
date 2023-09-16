@@ -19,6 +19,27 @@ var app config.AppConfig
 var session *scs.SessionManager
 
 func main() {
+	err := run()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("Listening on %s", POST_NUMBER)
+	//_ = http.ListenAndServe(POST_NUMBER, nil)
+
+	srv := &http.Server{
+		Addr:    POST_NUMBER,
+		Handler: routes(&app),
+	}
+
+	err = srv.ListenAndServe()
+	if err != nil {
+		log.Fatal("Cannot create the server.", err)
+	}
+}
+
+func run() error {
 	app.InProduction = false
 	//allow to store reservations in session
 	gob.Register(models.Reservation{})
@@ -35,6 +56,7 @@ func main() {
 
 	if err != nil {
 		log.Fatal("Cannot create the template cache.", err)
+		return err
 	}
 
 	app.TemplateCache = tc
@@ -44,16 +66,5 @@ func main() {
 	handlers.NewHandlers(repo)
 	render.NewTemplates(&app)
 
-	fmt.Printf("Listening on %s", POST_NUMBER)
-	//_ = http.ListenAndServe(POST_NUMBER, nil)
-
-	srv := &http.Server{
-		Addr:    POST_NUMBER,
-		Handler: routes(&app),
-	}
-
-	err = srv.ListenAndServe()
-	if err != nil {
-		log.Fatal("Cannot create the server.", err)
-	}
+	return nil
 }
