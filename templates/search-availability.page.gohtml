@@ -1,28 +1,30 @@
-
-    <div class="container">
+{{template "base" .}}
+{{define "content" }}
+    <div class="container" style="height: 100vh">
         <div class="row">
             <div class="col-md-6 mx-auto">
                 <h1 class="text-center mt-4">Search for Availability</h1>
-                <form id="reservation-form" method="get" action="reservation.html" class="my-5 needs-validation" novalidate>
-                    <div class="form-row">
+                <form method="post" action="/search-availability" class="my-5 needs-validation" novalidate>
+                    <input type="hidden" name="csrf_token" value="{{ .CSRFToken }}">
+                    <div class="form-row" id="reservation-form">
                         <div class="form-group col">
                             <label for="start">Start date</label>
-                            <input type="text" class="form-control" id="start" name="start"
-                                aria-describedby="startHelp" required>
+                            <input autocomplete="off" type="text" class="form-control" id="start" name="start"
+                                   aria-describedby="startHelp" required>
                             <div class="invalid-feedback">
                                 Please select a valid state.
                             </div>
                         </div>
                         <div class="form-group col">
                             <label for="end">End date</label>
-                            <input type="text" class="form-control" id="end" name="end"
-                                aria-describedby="endHelp" required>
+                            <input autocomplete="off" type="text" class="form-control" id="end" name="end"
+                                   aria-describedby="endHelp" required>
                             <div class="invalid-feedback">
                                 Please select a valid state.
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary">Search Availability</button>
                     </div>
@@ -30,3 +32,13 @@
             </div>
         </div>
     </div>
+{{end}}
+
+{{define "js"}}
+    <script>
+        const elem = document.getElementById('reservation-form');
+        const rangepicker = new DateRangePicker(elem, {
+            format: "yyyy-mm-dd"
+        })
+    </script>
+{{end}}

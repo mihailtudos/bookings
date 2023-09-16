@@ -1,0 +1,48 @@
+{{template "base" .}}
+{{ define "content"}}
+    <div class="container" style="height: 100vh">
+        <div class="row">
+            <div class="col-6 mt-4 mx-auto">
+                <img class="img-fluid img-thumbnail d-block" src="./static/images/generals-quarters.png" alt="Generals room">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center mt-4">Generals' Room</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, perferendis magnam impedit eius velit doloremque. Dicta ab distinctio repudiandae laudantium sit nisi. Facilis temporibus quasi sunt voluptatem voluptas blanditiis omnis quod itaque? Amet rem laudantium facere incidunt quod, dolor provident harum quibusdam dolore velit ut debitis consectetur dignissimos rerum repellat? Dolores consequuntur deserunt in velit quas sint vel saepe, necessitatibus impedit officia officiis labore repudiandae vitae! Et consequatur nulla quasi illo maxime mollitia minima delectus repellendus corrupti rem, ea rerum qui, quas eos a corporis sit, perferendis soluta deleniti! Temporibus, in libero molestiae culpa ipsa placeat laudantium laborum tempore, perspiciatis vel dolorum id ipsum nemo sed velit? Odit laudantium exercitationem odio eaque error rem, velit ducimus, impedit ipsum tenetur modi, commodi nobis. Accusamus voluptatum obcaecati nam odit repudiandae magnam, maxime architecto, modi est eius nobis dolores tenetur a perspiciatis quam ut et nihil, quaerat commodi ducimus asperiores neque. Doloremque minima aspernatur quos exercitationem, libero corrupti porro magnam hic, sint itaque pariatur illum possimus minus rem quae voluptas cupiditate ipsa sed! Velit, nihil corporis dolores possimus necessitatibus aut dignissimos, nobis id, dicta voluptatibus sint ducimus quis soluta dolorem eius explicabo. Saepe, error autem illum odio vitae temporibus vel nesciunt maiores sapiente?</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <button id="check-availability-button" class="btn btn-success">Check Availability</button>
+            </div>
+        </div>
+    </div>
+{{ end }}
+
+{{define "js"}}
+    <script>
+        document.getElementById('check-availability-button').addEventListener('click', () => {
+            const html = `
+                <form id="check-availability-form" method="post" class="needs-validation p-3" novalidate>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-row" id="reserve-dates-modal">
+                                <div class="col">
+                                    <input disabled type="text" class="form-control" id="from" name="from" placeholder="Arrival" required>
+                                    <div class="invalid-feedback">Please select a valid state. </div>
+                                </div>
+                                <div class="col">
+                                    <input disabled type="text" class="form-control" id="to" name="to" placeholder="Departure" required>
+                                    <div class="invalid-feedback"> Please select a valid state. </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            `;
+
+            attention.custom({ msg: html, title: "Check availability form"});
+        });
+    </script>
+{{end}}
